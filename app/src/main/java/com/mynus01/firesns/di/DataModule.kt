@@ -1,6 +1,5 @@
 package com.mynus01.firesns.di
 
-import androidx.lifecycle.ViewModel
 import com.mynus01.firesns.data.interactor.FirebaseAuthInteractor
 import com.mynus01.firesns.data.interactor.FirebaseAuthInteractorImpl
 import com.mynus01.firesns.data.provider.FirebaseAuthProvider

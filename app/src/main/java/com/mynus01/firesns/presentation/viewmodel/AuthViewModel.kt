@@ -1,10 +1,6 @@
 package com.mynus01.firesns.presentation.viewmodel
 
 import android.app.Activity
-import androidx.databinding.BaseObservable
-import androidx.databinding.Bindable
-import androidx.databinding.Observable
-import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.*
 import com.mynus01.firesns.data.interactor.FirebaseAuthInteractor
 import com.mynus01.firesns.data.interactor.FirebaseAuthInteractorOutput
@@ -13,8 +9,6 @@ import com.mynus01.firesns.presentation.state.ViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,7 +16,7 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val interactor: FirebaseAuthInteractor
 ) : ViewModel(), FirebaseAuthInteractorOutput {
-    var viewState = MutableLiveData<ViewState>(ViewState.Idle)
+    var viewState = MutableLiveData<ViewState>(ViewState.Init)
     var email = MutableLiveData("")
     var password = MutableLiveData("")
 
@@ -39,10 +33,14 @@ class AuthViewModel @Inject constructor(
 
 fun InteractorState.toViewState(): ViewState {
     return when (this) {
-        is InteractorState.Idle -> ViewState.Idle
+        is InteractorState.Idle -> ViewState.Init
         is InteractorState.Loading -> ViewState.Loading
-        is InteractorState.Complete -> ViewState.Complete
-        is InteractorState.Success<*> -> ViewState.Success(data)
-        is InteractorState.Fail -> ViewState.Fail(exception)
+        is InteractorState.Complete -> {
+            when(this) {
+                is InteractorState.Complete.Empty -> ViewState.Complete.Empty
+                is InteractorState.Complete.Success<*> -> ViewState.Complete.Success(this.data)
+                is InteractorState.Complete.Fail -> ViewState.Complete.Fail(this.exception)
+            }
+        }
     }
 }

@@ -10,20 +10,18 @@ class FirebaseAuthInteractorImpl @Inject constructor(
 ) : FirebaseAuthInteractor {
     override suspend fun signUp(executor: Executor, email: String, password: String, output: FirebaseAuthInteractorOutput) {
         output.collectInteractorState(InteractorState.Loading)
-
         try {
             authRepository.signUp(email, password)
-                .addOnCompleteListener(executor) {
-                    output.collectInteractorState(InteractorState.Loading)
-                }
                 .addOnSuccessListener(executor) { authResult ->
-                    output.collectInteractorState(InteractorState.Success(authResult?.user))
+                    authResult?.also { result ->
+                        output.collectInteractorState(InteractorState.Complete.Success(result.user))
+                    } ?: output.collectInteractorState(InteractorState.Complete.Empty)
                 }
                 .addOnFailureListener(executor) { exception ->
-                    output.collectInteractorState(InteractorState.Fail(exception))
+                    output.collectInteractorState(InteractorState.Complete.Fail(exception))
                 }
         } catch (e: Exception) {
-            output.collectInteractorState(InteractorState.Fail(e))
+            output.collectInteractorState(InteractorState.Complete.Fail(e))
         }
     }
 }

@@ -1,9 +1,11 @@
 package com.mynus01.firesns.presentation.state
 
 sealed class ViewState {
-    object Idle : ViewState()
+    object Init : ViewState()
     object Loading : ViewState()
-    object Complete : ViewState()
-    class Success<T>(val data: T?) : ViewState()
-    class Fail(val exception: Throwable) : ViewState()
+    sealed class Complete : ViewState() {
+        object Empty : Complete()
+        class Success<T>(val data: T) : Complete()
+        class Fail(val exception: Throwable) : Complete()
+    }
 }

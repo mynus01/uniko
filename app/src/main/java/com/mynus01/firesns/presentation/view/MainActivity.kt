@@ -30,20 +30,24 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.viewState.observe(this) { state ->
             when(state) {
-                is ViewState.Idle -> {
-                    Toast.makeText(this, "Idle", Toast.LENGTH_LONG).show()
+                is ViewState.Init -> {
+                    Toast.makeText(this, "Init", Toast.LENGTH_LONG).show()
                 }
                 is ViewState.Loading -> {
                     Toast.makeText(this, "Loading", Toast.LENGTH_LONG).show()
                 }
                 is ViewState.Complete -> {
-                    Toast.makeText(this, "Complete", Toast.LENGTH_LONG).show()
-                }
-                is ViewState.Success<*> -> {
-                    Toast.makeText(this, "Success\n ${(state.data as? FirebaseUser)?.email}", Toast.LENGTH_LONG).show()
-                }
-                is ViewState.Fail -> {
-                    Toast.makeText(this, "Fail\n ${state.exception.message}", Toast.LENGTH_LONG).show()
+                    when(state) {
+                        is ViewState.Complete.Empty -> {
+                            Toast.makeText(this, "Empty response", Toast.LENGTH_LONG).show()
+                        }
+                        is ViewState.Complete.Success<*> -> {
+                            Toast.makeText(this, "Success\n ${(state.data as? FirebaseUser)?.email}", Toast.LENGTH_LONG).show()
+                        }
+                        is ViewState.Complete.Fail -> {
+                            Toast.makeText(this, "Fail\n ${state.exception.message}", Toast.LENGTH_LONG).show()
+                        }
+                    }
                 }
             }
         }
