@@ -1,7 +1,7 @@
 package com.mynus01.firesns.data.interactor
 
-import java.util.concurrent.Executor
+import kotlinx.coroutines.flow.Flow
 
 interface FirebaseAuthInteractor {
-    suspend fun signUp(executor: Executor, email: String, password: String, output: FirebaseAuthInteractorOutput)
+    suspend fun signUp(email: String, password: String): Flow<InteractorState>
 }

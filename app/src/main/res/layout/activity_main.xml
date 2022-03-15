@@ -3,13 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <import type="com.mynus01.firesns.presentation.viewmodel.AuthViewModel"/>
         <variable
             name="vm"
-            type="AuthViewModel" />
-        <variable
-            name="act"
-            type="android.app.Activity" />
+            type="com.mynus01.firesns.presentation.viewmodel.AuthViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -57,7 +53,7 @@
             android:id="@+id/butSignUp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> vm.signUp(act)}"
+            android:onClick="signUp"
             android:text="Sign Up"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

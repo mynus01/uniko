@@ -2,20 +2,30 @@ package com.mynus01.firesns.presentation.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseUser
 import com.mynus01.firesns.BR
 import com.mynus01.firesns.R
+import com.mynus01.firesns.data.interactor.FirebaseAuthInteractor
 import com.mynus01.firesns.databinding.ActivityMainBinding
-import com.mynus01.firesns.presentation.state.ViewState
+import com.mynus01.firesns.presentation.domain.ViewState
+import com.mynus01.firesns.presentation.ext.toViewState
 import com.mynus01.firesns.presentation.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val viewModel: AuthViewModel by viewModels()
+    @Inject lateinit var interactor: FirebaseAuthInteractor
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,10 +35,9 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             lifecycleOwner = this@MainActivity
             setVariable(BR.vm, viewModel)
-            setVariable(BR.act, this@MainActivity)
         }
 
-        viewModel.viewState.observe(this) { state ->
+        viewModel.viewState.onEach { state ->
             when(state) {
                 is ViewState.Init -> {
                     Toast.makeText(this, "Init", Toast.LENGTH_LONG).show()
@@ -49,6 +58,14 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    fun signUp(view: View) {
+        CoroutineScope(Dispatchers.IO).launch {
+            interactor.signUp(viewModel.email.value!!, viewModel.password.value!!).collect { interactorState ->
+                viewModel.viewState.value = interactorState.toViewState()
             }
         }
     }

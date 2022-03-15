@@ -1,4 +1,4 @@
-package com.mynus01.firesns.presentation.state
+package com.mynus01.firesns.presentation.domain
 
 sealed class ViewState {
     object Init : ViewState()
