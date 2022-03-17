@@ -1,35 +1,29 @@
 package com.mynus01.firesns.di
 
-import com.mynus01.firesns.data.interactor.FirebaseAuthInteractor
-import com.mynus01.firesns.data.interactor.FirebaseAuthInteractorImpl
-import com.mynus01.firesns.data.provider.FirebaseAuthProvider
-import com.mynus01.firesns.data.provider.FirebaseAuthProviderImpl
-import com.mynus01.firesns.data.repository.FirebaseAuthRepository
-import com.mynus01.firesns.data.repository.FirebaseAuthRepositoryImpl
+import com.mynus01.firesns.datasource.interactor.FirebaseAuthInteractor
+import com.mynus01.firesns.datasource.interactor.FirebaseAuthInteractorImpl
+import com.mynus01.firesns.datasource.provider.FirebaseAuthProvider
+import com.mynus01.firesns.datasource.provider.FirebaseAuthProviderImpl
+import com.mynus01.firesns.datasource.repository.FirebaseAuthRepository
+import com.mynus01.firesns.datasource.repository.FirebaseAuthRepositoryImpl
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class DataModule {
-    @Provides
+abstract class DataModule {
+    @Binds
     @Singleton
-    fun firebaseAuthProvider(): FirebaseAuthProvider {
-        return FirebaseAuthProviderImpl()
-    }
+    abstract fun firebaseAuthProvider(impl: FirebaseAuthProviderImpl): FirebaseAuthProvider
 
-    @Provides
+    @Binds
     @Singleton
-    fun firebaseAuthRepository(authProvider: FirebaseAuthProvider): FirebaseAuthRepository {
-        return FirebaseAuthRepositoryImpl(authProvider)
-    }
+    abstract fun firebaseAuthRepository(impl: FirebaseAuthRepositoryImpl): FirebaseAuthRepository
 
-    @Provides
+    @Binds
     @Singleton
-    fun firebaseAuthInteractor(firebaseAuthRepository: FirebaseAuthRepository): FirebaseAuthInteractor{
-        return FirebaseAuthInteractorImpl(firebaseAuthRepository)
-    }
+    abstract fun firebaseAuthInteractor(impl: FirebaseAuthInteractorImpl): FirebaseAuthInteractor
 }

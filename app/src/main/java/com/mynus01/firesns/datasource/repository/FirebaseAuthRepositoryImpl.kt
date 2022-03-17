@@ -1,8 +1,8 @@
-package com.mynus01.firesns.data.repository
+package com.mynus01.firesns.datasource.repository
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
-import com.mynus01.firesns.data.provider.FirebaseAuthProvider
+import com.mynus01.firesns.datasource.provider.FirebaseAuthProvider
 import javax.inject.Inject
 
 class FirebaseAuthRepositoryImpl @Inject constructor(

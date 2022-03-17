@@ -1,4 +1,4 @@
-package com.mynus01.firesns.data.provider
+package com.mynus01.firesns.datasource.provider
 
 import com.google.firebase.auth.FirebaseAuth
 

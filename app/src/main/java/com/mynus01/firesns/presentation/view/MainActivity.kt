@@ -9,23 +9,22 @@ import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseUser
 import com.mynus01.firesns.BR
 import com.mynus01.firesns.R
-import com.mynus01.firesns.data.interactor.FirebaseAuthInteractor
+import com.mynus01.firesns.datasource.interactor.FirebaseAuthInteractor
 import com.mynus01.firesns.databinding.ActivityMainBinding
-import com.mynus01.firesns.presentation.domain.ViewState
-import com.mynus01.firesns.presentation.ext.toViewState
+import com.mynus01.firesns.domain.ViewState
 import com.mynus01.firesns.presentation.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    @Inject
+    lateinit var interactor: FirebaseAuthInteractor
     private val viewModel: AuthViewModel by viewModels()
-    @Inject lateinit var interactor: FirebaseAuthInteractor
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,24 +36,24 @@ class MainActivity : AppCompatActivity() {
             setVariable(BR.vm, viewModel)
         }
 
-        viewModel.viewState.onEach { state ->
-            when(state) {
+        viewModel.viewState.observe(this) { state ->
+            when (state) {
                 is ViewState.Init -> {
-                    Toast.makeText(this, "Init", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Init", Toast.LENGTH_SHORT).show()
                 }
                 is ViewState.Loading -> {
-                    Toast.makeText(this, "Loading", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                 }
                 is ViewState.Complete -> {
-                    when(state) {
+                    when (state) {
                         is ViewState.Complete.Empty -> {
-                            Toast.makeText(this, "Empty response", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "Empty response", Toast.LENGTH_SHORT).show()
                         }
                         is ViewState.Complete.Success<*> -> {
-                            Toast.makeText(this, "Success\n ${(state.data as? FirebaseUser)?.email}", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "Success\n ${(state.data as? FirebaseUser)?.email}", Toast.LENGTH_SHORT).show()
                         }
                         is ViewState.Complete.Fail -> {
-                            Toast.makeText(this, "Fail\n ${state.exception.message}", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "Fail\n ${state.exception.message}", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -62,10 +61,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun signUp(view: View) {
-        CoroutineScope(Dispatchers.IO).launch {
-            interactor.signUp(viewModel.email.value!!, viewModel.password.value!!).collect { interactorState ->
-                viewModel.viewState.value = interactorState.toViewState()
+    fun signUp(v: View) {
+        CoroutineScope(Dispatchers.Default).launch {
+            interactor.signUp(viewModel.email.value!!, viewModel.password.value!!).collect { state ->
+                viewModel.viewState.postValue(state)
             }
         }
     }

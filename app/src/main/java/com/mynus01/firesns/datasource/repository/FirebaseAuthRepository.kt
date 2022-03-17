@@ -1,4 +1,4 @@
-package com.mynus01.firesns.data.repository
+package com.mynus01.firesns.datasource.repository
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
