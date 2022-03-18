@@ -13,11 +13,9 @@ import com.mynus01.firesns.datasource.interactor.FirebaseAuthInteractor
 import com.mynus01.firesns.databinding.ActivityMainBinding
 import com.mynus01.firesns.domain.ViewState
 import com.mynus01.firesns.presentation.viewmodel.AuthViewModel
+import com.mynus01.firesns.state.action.InputAction.SignUpInput
+import com.mynus01.firesns.state.dispatch
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -62,10 +60,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun signUp(v: View) {
-        CoroutineScope(Dispatchers.Default).launch {
-            interactor.signUp(viewModel.email.value!!, viewModel.password.value!!).collect { state ->
-                viewModel.viewState.postValue(state)
-            }
+        val email = viewModel.email.value
+        val password = viewModel.password.value
+
+        if (email != null && password != null) {
+            dispatch(SignUpInput(interactor, email, password))
         }
     }
 }
