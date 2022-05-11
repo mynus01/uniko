@@ -26,11 +26,12 @@ class AuthViewModel @Inject constructor(
     init {
         CoroutineScope(dispatcher).launch {
             receiver.observe { action ->
-                if (action is OutputAction.SignUpOutput) {
-                    action.state.collect { state ->
-                        viewState.value = state
-                    }
-                }
+//                if (action is OutputAction.SignUpOutput) {
+//                    action.state.collect { state ->
+//                        viewState.value = state
+//                    }
+//                }
+                viewState.value = ViewState.Complete.Empty
             }
         }
     }
