@@ -5,5 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 sealed class OutputAction {
     object InitOutput: OutputAction()
-    class SignUpOutput(val state: Flow<ViewState>) : OutputAction()
+    class SignUpOutput(val viewState: Flow<ViewState>) : OutputAction()
+    object TestOutput: OutputAction()
 }

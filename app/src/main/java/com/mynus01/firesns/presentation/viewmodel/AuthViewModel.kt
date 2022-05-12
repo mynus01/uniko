@@ -1,7 +1,6 @@
 package com.mynus01.firesns.presentation.viewmodel
 
 import androidx.lifecycle.*
-import com.mynus01.firesns.di.DispatcherIO
 import com.mynus01.firesns.di.DispatcherMain
 import com.mynus01.firesns.domain.ViewState
 import com.mynus01.firesns.state.receiver.Receiver
@@ -21,17 +20,14 @@ class AuthViewModel @Inject constructor(
 ) : ViewModel() {
     var email = MutableLiveData("")
     var password = MutableLiveData("")
-    var viewState = MutableLiveData<ViewState>(ViewState.Init)
+    var viewStateLiveData = MutableLiveData<ViewState>(ViewState.Init)
 
     init {
         CoroutineScope(dispatcher).launch {
-            receiver.observe { action ->
-//                if (action is OutputAction.SignUpOutput) {
-//                    action.state.collect { state ->
-//                        viewState.value = state
-//                    }
-//                }
-                viewState.value = ViewState.Complete.Empty
+            receiver.observe(OutputAction.SignUpOutput::class)?.collect { action ->
+                action.viewState.collect { state ->
+                    viewStateLiveData.value = state
+                }
             }
         }
     }

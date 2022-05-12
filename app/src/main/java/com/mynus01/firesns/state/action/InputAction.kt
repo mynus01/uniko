@@ -9,4 +9,5 @@ sealed class InputAction {
         val email: String,
         val password: String
     ) : InputAction()
+    object TestInput : InputAction()
 }

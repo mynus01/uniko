@@ -22,7 +22,6 @@ class AppStore @Inject constructor(
             inputState.collect { action ->
                 outputState.emit(reduce(action))
             }
-            inputState.emit(InputAction.InitInput)
         }
     }
 
@@ -30,6 +29,7 @@ class AppStore @Inject constructor(
         return when (action) {
             is InputAction.InitInput -> OutputAction.InitOutput
             is InputAction.SignUpInput -> SignUpReducer().reduce(action)
+            is InputAction.TestInput -> OutputAction.TestOutput
         }
     }
 }
