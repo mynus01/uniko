@@ -2,7 +2,6 @@ package com.mynus01.firesns.state.dispatcher
 
 import com.mynus01.firesns.di.DispatcherMain
 import com.mynus01.firesns.state.action.InputAction
-import com.mynus01.firesns.state.action.OutputAction
 import com.mynus01.firesns.state.store.Store
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
