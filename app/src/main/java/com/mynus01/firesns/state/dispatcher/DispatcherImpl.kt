@@ -14,12 +14,10 @@ class DispatcherImpl @Inject constructor(
     private val coroutineDispatcher: CoroutineDispatcher,
     private val store: Store
 ) : Dispatcher {
-//    private var lastAction: InputAction? = null
 
     override fun dispatch(action: InputAction) {
         CoroutineScope(coroutineDispatcher).launch {
             store.inputState.emit(action)
         }
-//        lastAction = action
     }
 }
