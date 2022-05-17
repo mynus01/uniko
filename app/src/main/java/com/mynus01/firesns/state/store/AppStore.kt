@@ -29,7 +29,6 @@ class AppStore @Inject constructor(
         return when (action) {
             is InputAction.InitInput -> OutputAction.InitOutput
             is InputAction.SignUpInput -> SignUpReducer().reduce(action)
-            is InputAction.TestInput -> OutputAction.TestOutput
         }
     }
 }
