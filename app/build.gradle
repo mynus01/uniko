@@ -40,14 +40,13 @@ kapt {
 }
 
 dependencies {
-
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'com.google.android.material:material:1.6.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
 
     implementation platform('com.google.firebase:firebase-bom:29.1.0')
-    implementation 'com.google.firebase:firebase-auth:21.0.1'
+    implementation 'com.google.firebase:firebase-auth:21.0.3'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.1'
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
     implementation "androidx.fragment:fragment-ktx:1.4.1"
@@ -55,6 +54,9 @@ dependencies {
     kapt 'com.google.dagger:hilt-android-compiler:2.38.1'
 
     testImplementation 'junit:junit:4.13.2'
+    testImplementation "io.mockk:mockk:1.12.1"
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1'
+    testImplementation 'app.cash.turbine:turbine:0.8.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
