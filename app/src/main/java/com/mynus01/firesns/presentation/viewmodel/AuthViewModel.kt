@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import com.mynus01.firesns.di.DispatcherMain
 import com.mynus01.firesns.domain.ViewState
 import com.mynus01.firesns.state.receiver.Receiver
-import com.mynus01.firesns.presentation.action.OutAction
+import com.mynus01.firesns.presentation.state.action.OutAction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope

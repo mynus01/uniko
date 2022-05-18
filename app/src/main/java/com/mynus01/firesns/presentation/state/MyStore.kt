@@ -1,9 +1,9 @@
-package com.mynus01.firesns.presentation
+package com.mynus01.firesns.presentation.state
 
 import com.mynus01.firesns.di.DispatcherMain
-import com.mynus01.firesns.presentation.action.InAction
-import com.mynus01.firesns.presentation.action.OutAction
-import com.mynus01.firesns.presentation.reducer.SignUpReducer
+import com.mynus01.firesns.presentation.state.action.InAction
+import com.mynus01.firesns.presentation.state.action.OutAction
+import com.mynus01.firesns.presentation.state.reducer.SignUpReducer
 import com.mynus01.firesns.state.store.StoreImpl
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject

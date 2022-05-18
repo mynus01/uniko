@@ -1,4 +1,4 @@
-package com.mynus01.firesns.presentation.action
+package com.mynus01.firesns.presentation.state.action
 
 import com.mynus01.firesns.datasource.interactor.FirebaseAuthInteractor
 import com.mynus01.firesns.state.action.InputAction
