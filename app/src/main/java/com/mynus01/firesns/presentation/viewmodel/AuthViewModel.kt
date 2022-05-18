@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import com.mynus01.firesns.di.DispatcherMain
 import com.mynus01.firesns.domain.ViewState
 import com.mynus01.firesns.state.receiver.Receiver
-import com.mynus01.firesns.state.action.OutputAction
+import com.mynus01.firesns.presentation.action.OutAction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -24,7 +24,7 @@ class AuthViewModel @Inject constructor(
 
     init {
         CoroutineScope(dispatcher).launch {
-            receiver.observe(OutputAction.SignUpOutput::class)?.collect { action ->
+            receiver.observe(OutAction.SignUpOutput::class)?.collect { action ->
                 action.viewState.collect { state ->
                     viewStateLiveData.value = state
                 }

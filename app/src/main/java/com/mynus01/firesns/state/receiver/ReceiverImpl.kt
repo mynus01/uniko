@@ -1,6 +1,7 @@
 package com.mynus01.firesns.state.receiver
 
 import com.mynus01.firesns.di.DispatcherMain
+import com.mynus01.firesns.state.action.InputAction
 import com.mynus01.firesns.state.action.OutputAction
 import com.mynus01.firesns.state.store.Store
 import kotlinx.coroutines.*
@@ -8,10 +9,10 @@ import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-class ReceiverImpl @Inject constructor(
+class ReceiverImpl<I: InputAction, O: OutputAction> @Inject constructor(
     @DispatcherMain
     private val coroutineDispatcher: CoroutineDispatcher,
-    private val store: Store
+    private val store: Store<I, O>
 ) : Receiver {
     private val map: MutableMap<KClass<OutputAction>, MutableSharedFlow<OutputAction>> = mutableMapOf()
 
