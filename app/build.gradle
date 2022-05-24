@@ -51,7 +51,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
     implementation "androidx.fragment:fragment-ktx:1.4.1"
     implementation 'com.google.dagger:hilt-android:2.38.1'
+    implementation project(path: ':uniko')
     kapt 'com.google.dagger:hilt-android-compiler:2.38.1'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation "io.mockk:mockk:1.12.1"
@@ -59,4 +61,5 @@ dependencies {
     testImplementation 'app.cash.turbine:turbine:0.8.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.6.21"
 }
