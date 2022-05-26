@@ -279,4 +279,4 @@ fabric.properties
 /.idea/
 
 # Firebase Config File
-app/google-services.json
+google-services.json
