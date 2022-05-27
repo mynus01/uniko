@@ -31,7 +31,7 @@ class ReceiverTest : BaseEnvironment() {
         receiver.observe(TestExceptionOutput::class)?.test {
             dispatcher.dispatch(inputAction)
             Assert.assertThrows(IllegalStateException::class.java) {
-                this@runTest.runTest {
+                runTest {
                     awaitItem()
                     cancelAndIgnoreRemainingEvents()
                 }
