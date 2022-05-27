@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+group='com.github.mynus01'
+
 android {
     compileSdk 31
 
