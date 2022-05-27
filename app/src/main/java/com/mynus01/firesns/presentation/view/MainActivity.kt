@@ -1,20 +1,22 @@
 package com.mynus01.firesns.presentation.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseUser
 import com.mynus01.firesns.BR
 import com.mynus01.firesns.R
-import com.mynus01.firesns.datasource.interactor.FirebaseAuthInteractor
 import com.mynus01.firesns.databinding.ActivityMainBinding
+import com.mynus01.firesns.datasource.interactor.FirebaseAuthInteractor
 import com.mynus01.firesns.domain.ViewState
+import com.mynus01.firesns.presentation.uniko.action.InAction
+import com.mynus01.firesns.presentation.uniko.action.InAction.SignUpInput
 import com.mynus01.firesns.presentation.viewmodel.AuthViewModel
-import com.mynus01.firesns.state.action.InputAction.SignUpInput
-import com.mynus01.firesns.state.dispatcher.Dispatcher
+import com.mynus01.uniko.action.InputAction
+import com.mynus01.uniko.dispatcher.Dispatcher
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -25,10 +27,11 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var interactor: FirebaseAuthInteractor
     @Inject
-    lateinit var dispatcher: Dispatcher
+    lateinit var dispatcher: Dispatcher<InputAction>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         binding.apply {
@@ -50,10 +53,14 @@ class MainActivity : AppCompatActivity() {
                             Toast.makeText(this, "Empty response", Toast.LENGTH_SHORT).show()
                         }
                         is ViewState.Complete.Success<*> -> {
-                            Toast.makeText(this, "Success\n ${(state.data as? FirebaseUser)?.email}", Toast.LENGTH_SHORT).show()
+                            val message = when(state.data) {
+                                is FirebaseUser -> state.data.email
+                                else -> state.data
+                            }
+                            Toast.makeText(this, "Success\n$message", Toast.LENGTH_SHORT).show()
                         }
                         is ViewState.Complete.Fail -> {
-                            Toast.makeText(this, "Fail\n ${state.exception.message}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Fail\n${state.exception.message}", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
