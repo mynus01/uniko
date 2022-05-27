@@ -53,10 +53,14 @@ class MainActivity : AppCompatActivity() {
                             Toast.makeText(this, "Empty response", Toast.LENGTH_SHORT).show()
                         }
                         is ViewState.Complete.Success<*> -> {
-                            Toast.makeText(this, "Success\n ${(state.data as? FirebaseUser)?.email}", Toast.LENGTH_SHORT).show()
+                            val message = when(state.data) {
+                                is FirebaseUser -> state.data.email
+                                else -> state.data
+                            }
+                            Toast.makeText(this, "Success\n$message", Toast.LENGTH_SHORT).show()
                         }
                         is ViewState.Complete.Fail -> {
-                            Toast.makeText(this, "Fail\n ${state.exception.message}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Fail\n${state.exception.message}", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
