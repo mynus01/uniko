@@ -277,6 +277,3 @@ fabric.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,linux,macos,android,androidstudio
 /.idea/
-
-# Firebase Config File
-google-services.json
