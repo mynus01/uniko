@@ -2,8 +2,8 @@ package com.mynus01.firesns.presentation.viewmodel
 
 import androidx.lifecycle.*
 import com.mynus01.firesns.domain.ViewState
+import com.mynus01.firesns.presentation.uniko.action.output.SignUpOutput
 import com.mynus01.uniko.receiver.Receiver
-import com.mynus01.firesns.presentation.uniko.action.OutAction
 import com.mynus01.uniko.extension.launch
 import com.mynus01.uniko.extension.observe
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +19,7 @@ class AuthViewModel @Inject constructor(
     var viewStateLiveData = MutableLiveData<ViewState>(ViewState.Init)
 
     init {
-        receiver.observe(OutAction.SignUpOutput::class) { action ->
+        receiver.observe(SignUpOutput::class) { action ->
             launch {
                 action.viewState.collect { state ->
                     viewStateLiveData.value = state

@@ -1,13 +1,13 @@
 package com.mynus01.firesns.presentation.uniko.reducer
 
-import com.mynus01.firesns.presentation.uniko.action.InAction
-import com.mynus01.firesns.presentation.uniko.action.OutAction
+import com.mynus01.firesns.presentation.uniko.action.input.SignUpInput
+import com.mynus01.firesns.presentation.uniko.action.output.SignUpOutput
 import com.mynus01.uniko.reducer.Reducer
 
-class SignUpReducer : Reducer<InAction.SignUpInput, OutAction.SignUpOutput> {
-    override fun reduce(action: InAction.SignUpInput): OutAction.SignUpOutput {
+class SignUpReducer : Reducer<SignUpInput, SignUpOutput> {
+    override fun reduce(action: SignUpInput): SignUpOutput {
         action.apply {
-            return OutAction.SignUpOutput(interactor.signUp(email, password))
+            return SignUpOutput(interactor.signUp(email, password))
         }
     }
 }
