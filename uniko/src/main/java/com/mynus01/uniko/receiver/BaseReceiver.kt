@@ -10,8 +10,7 @@ import kotlin.reflect.KClass
 
 open class BaseReceiver<I: InputAction, O: OutputAction>(
     private val store: Store<I, O>,
-    private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.Main,
-
+    private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.Main
 ) : Receiver {
     private val map: MutableMap<KClass<OutputAction>, MutableSharedFlow<OutputAction>> = mutableMapOf()
 

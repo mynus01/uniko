@@ -1,8 +1,6 @@
 package com.mynus01.firesns.di
 
 import com.mynus01.firesns.presentation.uniko.store.AppStore
-import com.mynus01.firesns.presentation.uniko.action.InAction
-import com.mynus01.firesns.presentation.uniko.action.OutAction
 import com.mynus01.firesns.presentation.uniko.dispatcher.AppDispatcher
 import com.mynus01.firesns.presentation.uniko.receiver.AppReceiver
 import com.mynus01.uniko.action.InputAction
@@ -21,7 +19,7 @@ import javax.inject.Singleton
 interface UniModule {
     @Binds
     @Singleton
-    fun myStoreProvider(store: AppStore): Store<InputAction, OutputAction>
+    fun storeProvider(store: AppStore): Store<InputAction, OutputAction>
 
     @Binds
     fun receiverProvider(receiver: AppReceiver): Receiver
