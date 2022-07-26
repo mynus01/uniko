@@ -1,5 +1,5 @@
 
-# Uniko [![](https://jitpack.io/v/mynus01/uniko.svg)](https://jitpack.io/#mynus01/uniko) ![](https://github.com/mynus01/uniko/actions/workflows/android_test.yml/badge.svg)
+# Uniko [![](https://jitpack.io/v/mynus01/uniko.svg)](https://jitpack.io/#mynus01/uniko) ![](https://github.com/mynus01/uniko/actions/workflows/android.yml/badge.svg)
 
 
 **Uniko** is a library that makes Android development organized and standardized.
